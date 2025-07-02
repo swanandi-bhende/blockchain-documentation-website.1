@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchain & Web3 Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #404040;
+            --accent-color: #666666;
+            --accent-hover: #333333;
+            --text-primary: #000000;
+            --text-secondary: #666666;
+            --background: #ffffff;
+            --surface: #f5f5f5;
+            --border: #e0e0e0;
+            --success: #333333;
+            --warning: #666666;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--background);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: var(--accent-color);
+        }
+
+        /* Main Layout */
+        .main-layout {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+
+        .sidebar {
+            width: 280px;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            padding: 2rem 0;
+            position: sticky;
+            top: 80px;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-item {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-item:hover {
+            background: rgba(102, 102, 102, 0.1);
+            border-left-color: var(--accent-color);
+        }
+
+        .sidebar-item.active {
+            background: rgba(102, 102, 102, 0.15);
+            border-left-color: var(--accent-color);
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .content {
+            flex: 1;
+            padding: 2rem;
+            background: var(--background);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--surface) 0%, rgba(102, 102, 102, 0.05) 100%);
+            border-radius: 12px;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .section-description {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+
+        /* Expandable Topics */
+        .topic-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .topic-item {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .topic-item:hover {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .topic-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .topic-header h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .toggle-icon {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s ease;
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .topic-item.expanded .toggle-icon {
+            transform: rotate(45deg);
+        }
+
+        .topic-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: white;
+        }
+
+        .topic-item.expanded .topic-content {
+            max-height: 1000px;
+        }
+
+        .topic-inner {
+            padding: 1.5rem;
+        }
+
+        .topic-inner p {
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .subtopic-list {
+            margin-top: 1.5rem;
+        }
+
+        .subtopic-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+        }
+
+        .subtopic-header {
+            padding: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .subtopic-header h4 {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--secondary-color);
+        }
+
+        .subtopic-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: white;
+        }
+
+        .subtopic-item.expanded .subtopic-content {
+            max-height: 500px;
+        }
+
+        .subtopic-inner {
+            padding: 1rem;
+            color: var(--text-primary);
+        }
+
+        .subtopic-inner p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Code blocks */
+        .code-block {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">Blockchain Docs</a>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="#" class="nav-link active" data-section="home">Home</a></li>
+                        <li><a href="#" class="nav-link" data-section="fundamentals">Fundamentals</a></li>
+                        <li><a href="#" class="nav-link" data-section="defi">DeFi</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">Navigation</div>
+                <div class="sidebar-item active" data-section="home">Home</div>
+                <div class="sidebar-item" data-section="fundamentals">Blockchain Fundamentals</div>
+                <div class="sidebar-item" data-section="defi">DeFi</div>
+            </div>
+        </aside>
+
+        <main class="content">
+            <!-- Home Section -->
+            <div class="content-section active" id="home">
+                <div class="hero">
+                    <h1>Blockchain & Web3 Documentation</h1>
+                    <p>Your comprehensive guide to understanding blockchain technology, decentralized finance, and the future of the web.</p>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                    <div style="background: white; padding: 2rem; border-radius: 12px; border: 1px solid var(--border);">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Blockchain Fundamentals</h3>
+                        <p style="color: var(--text-secondary);">Learn the core concepts of blockchain technology, from basic principles to advanced topics.</p>
+                    </div>
+                    <div style="background: white; padding: 2rem; border-radius: 12px; border: 1px solid var(--border);">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Decentralized Finance</h3>
+                        <p style="color: var(--text-secondary);">Explore the world of DeFi, including protocols, yield farming, and financial primitives.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fundamentals Section -->
+            <div class="content-section" id="fundamentals">
+                <h2 class="section-title">Blockchain Fundamentals</h2>
+                <p class="section-description">Master the core concepts that power blockchain technology and understand how distributed systems work.</p>
+                
+                <div class="topic-list">
+                    <div class="topic-item">
+                        <div class="topic-header">
+                            <h3>What is Blockchain?</h3>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="topic-content">
+                            <div class="topic-inner">
+                                <p>A blockchain is a distributed, immutable ledger that records transactions across a network of computers. It consists of blocks of data linked together cryptographically.</p>
+                                <p><strong>Key Properties:</strong></p>
+                                <ul style="margin-left: 1rem; margin-bottom: 1rem;">
+                                    <li>Decentralization - No single point of control</li>
+                                    <li>Immutability - Records cannot be altered once confirmed</li>
+                                    <li>Transparency - All transactions are publicly visible</li>
+                                    <li>Consensus - Network agrees on the state</li>
+                                </ul>
+                                
+                                <div class="subtopic-list">
+                                    <div class="subtopic-item">
+                                        <div class="subtopic-header">
+                                            <h4>Block Structure</h4>
+                                            <span class="toggle-icon">+</span>
+                                        </div>
+                                        <div class="subtopic-content">
+                                            <div class="subtopic-inner">
+                                                <p>Each block contains:</p>
+                                                <ul style="margin-left: 1rem;">
+                                                    <li><strong>Header:</strong> Previous block hash, merkle root, timestamp</li>
+                                                    <li><strong>Transaction Data:</strong> List of all transactions in the block</li>
+                                                    <li><strong>Hash:</strong> Unique identifier for the block</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="subtopic-item">
+                                        <div class="subtopic-header">
+                                            <h4>Cryptographic Hashing</h4>
+                                            <span class="toggle-icon">+</span>
+                                        </div>
+                                        <div class="subtopic-content">
+                                            <div class="subtopic-inner">
+                                                <p>Blockchain uses SHA-256 hashing to ensure data integrity. Each block's hash depends on its content and the previous block's hash, creating an immutable chain.</p>
+                                                <div class="code-block">
+                                                    Block Hash = SHA256(Previous Hash + Merkle Root + Timestamp + Nonce)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="topic-item">
+                        <div class="topic-header">
+                            <h3>Consensus Mechanisms</h3>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="topic-content">
+                            <div class="topic-inner">
+                                <p>Consensus mechanisms ensure all nodes in the network agree on the blockchain's current state without requiring a central authority.</p>
+                                
+                                <div class="subtopic-list">
+                                    <div class="subtopic-item">
+                                        <div class="subtopic-header">
+                                            <h4>Proof of Work (PoW)</h4>
+                                            <span class="toggle-icon">+</span>
+                                        </div>
+                                        <div class="subtopic-content">
+                                            <div class="subtopic-inner">
+                                                <p>Miners compete to solve cryptographic puzzles to validate blocks. Energy-intensive but highly secure.</p>
+                                                <p><strong>Used by:</strong> Bitcoin, Ethereum (pre-merge)</p>
+                                                <p><strong>Pros:</strong> High security, battle-tested</p>
+                                                <p><strong>Cons:</strong> High energy consumption, slower transactions</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="subtopic-item">
+                                        <div class="subtopic-header">
+                                            <h4>Proof of Stake (PoS)</h4>
+                                            <span class="toggle-icon">+</span>
+                                        </div>
+                                        <div class="subtopic-content">
+                                            <div class="subtopic-inner">
+                                                <p>Validators are chosen to create blocks based on their stake in the network. More energy-efficient than PoW.</p>
+                                                <p><strong>Used by:</strong> Ethereum 2.0, Cardano, Polkadot</p>
+                                                <p><strong>Pros:</strong> Energy efficient, faster finality</p>
+                                                <p><strong>Cons:</strong> Potential centralization, newer mechanism</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="topic-item">
+                        <div class="topic-header">
+                            <h3>Smart Contracts</h3>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="topic-content">
+                            <div class="topic-inner">
+                                <p>Self-executing contracts with terms directly written into code. They automatically execute when predetermined conditions are met.</p>
+                                
+                                <div class="subtopic-list">
+                                    <div class="subtopic-item">
+                                        <div class="subtopic-header">
+                                            <h4>Ethereum Virtual Machine (EVM)</h4>
+                                            <span class="toggle-icon">+</span>
+                                        </div>
+                                        <div class="subtopic-content">
+                                            <div class="subtopic-inner">
+                                                <p>The EVM is a runtime environment for smart contracts in Ethereum. It's Turing-complete and allows complex computations.</p>
+                                                <div class="code-block">
+                                                    pragma solidity ^0.8.0;
+
+contract SimpleStorage {
+    uint256 storedData;
+    
+    function set(uint256 x) public {
+        storedData = x;
+    }
+    
+    function get() public view returns (uint256) {
+        return storedData;
+    }
+}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DeFi Section -->
+            <div class="content-section" id="defi">
+                <h2 class="section-title">Decentralized Finance (DeFi)</h2>
+                <p class="section-description">Explore the revolutionary world of decentralized finance and how it's reshaping traditional financial services.</p>
+                
+                <div class="topic-list">
+                    <div class="topic-item">
+                        <div class="topic-header">
+                            <h3>What is DeFi?</h3>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="topic-content">
+                            <div class="topic-inner">
+                                <p>DeFi refers to financial services built on blockchain networks, primarily Ethereum, that operate without traditional intermediaries like banks or brokers.</p>
+                                
+                                <div class="subtopic-list">
+                                    <div class="subtopic-item">
+                                        <div class="subtopic-header">
+                                            <h4>Core Principles</h4>
+                                            <span class="toggle-icon">+</span>
+                                        </div>
+                                        <div class="subtopic-content">
+                                            <div class="subtopic-inner">
+                                                <p><strong>Permissionless:</strong> Anyone can access DeFi services without approval</p>
+                                                <p><strong>Composable:</strong> DeFi protocols can be combined like "money legos"</p>
+                                                <p><strong>Transparent:</strong> All transactions and code are publicly verifiable</p>
+                                                <p><strong>Non-custodial:</strong> Users maintain control of their assets</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="topic-item">
+                        <div class="topic-header">
+                            <h3>DeFi Protocols & Applications</h3>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="topic-content">
+                            <div class="topic-inner">
+                                <p>Various types of financial services have been recreated in the DeFi ecosystem:</p>
+                                
+                                <div class="subtopic-list">
+                                    <div class="subtopic-item">
+                                        <div class="subtopic-header">
+                                            <h4>Decentralized Exchanges (DEXs)</h4>
+                                            <span class="toggle-icon">+</span>
+                                        </div>
+                                        <div class="subtopic-content">
+                                            <div class="subtopic-inner">
+                                                <p>Automated market makers (AMMs) that allow users to trade tokens without intermediaries.</p>
+                                                <p><strong>Examples:</strong> Uniswap, SushiSwap, PancakeSwap</p>
+                                                <p><strong>How it works:</strong> Liquidity pools replace order books, with algorithmic pricing based on pool ratios.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="subtopic-item">
+                                        <div class="subtopic-header">
+                                            <h4>Lending & Borrowing</h4>
+                                            <span class="toggle-icon">+</span>
+                                        </div>
+                                        <div class="subtopic-content">
+                                            <div class="subtopic-inner">
+                                                <p>Protocols that enable users to lend assets to earn interest or borrow against collateral.</p>
+                                                <p><strong>Examples:</strong> Aave, Compound, MakerDAO</p>
+                                                <p><strong>Key concepts:</strong> Over-collateralization, liquidation, interest rate models</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="subtopic-item">
+                                        <div class="subtopic-header">
+                                            <h4>Yield Farming</h4>
+                                            <span class="toggle-icon">+</span>
+                                        </div>
+                                        <div class="subtopic-content">
+                                            <div class="subtopic-inner">
+                                                <p>Strategy of maximizing returns by moving assets between different DeFi protocols to earn the highest yield.</p>
+                                                <p><strong>Strategies:</strong> Liquidity provision, staking, lending, farming governance tokens</p>
+                                                <p><strong>Risks:</strong> Impermanent loss, smart contract risk, rug pulls</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="topic-item">
+                        <div class="topic-header">
+                            <h3>Stablecoins</h3>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="topic-content">
+                            <div class="topic-inner">
+                                <p>Cryptocurrencies designed to maintain a stable value relative to a reference asset, typically the US Dollar.</p>
+                                
+                                <div class="subtopic-list">
+                                    <div class="subtopic-item">
+                                        <div class="subtopic-header">
+                                            <h4>Types of Stablecoins</h4>
+                                            <span class="toggle-icon">+</span>
+                                        </div>
+                                        <div class="subtopic-content">
+                                            <div class="subtopic-inner">
+                                                <p><strong>Fiat-backed:</strong> USDC, USDT - backed by real USD reserves</p>
+                                                <p><strong>Crypto-backed:</strong> DAI - backed by crypto collateral</p>
+                                                <p><strong>Algorithmic:</strong> UST (failed), FRAX - maintained through algorithms</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Navigation functionality
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        const contentSections = document.querySelectorAll('.content-section');
+
+        function showSection(sectionId) {
+            // Hide all sections
+            contentSections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show target section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+            
+            // Update nav and sidebar active states
+            navLinks.forEach(link => link.classList.remove('active'));
+            sidebarItems.forEach(item => item.classList.remove('active'));
+            
+            document.querySelector(`[data-section="${sectionId}"]`).classList.add('active');
+            document.querySelector(`.sidebar-item[data-section="${sectionId}"]`).classList.add('active');
+        }
+
+        // Add click listeners
+        [...navLinks, ...sidebarItems].forEach(element => {
+            element.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sectionId = element.getAttribute('data-section');
+                showSection(sectionId);
+            });
+        });
+
+        // Expandable topics functionality
+        function setupExpandableTopic(selector) {
+            document.querySelectorAll(selector).forEach(item => {
+                const header = item.querySelector(`${selector.slice(0, -5)}-header`);
+                
+                header.addEventListener('click', () => {
+                    item.classList.toggle('expanded');
+                });
+            });
+        }
+
+        // Setup both topic and subtopic expandables
+        setupExpandableTopic('.topic-item');
+        setupExpandableTopic('.subtopic-item');
+    </script>
+</body>
+</html>
